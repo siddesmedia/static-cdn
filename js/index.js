@@ -30,8 +30,8 @@ async function getusername(id, userid) {
 }
 
 async function version(id) {
-    return document.getElementById(id).innerHTML = localStorage['version'].toString() || $.getJSON("/api/version", function (json) {
-        localStorage['version'] = json.version;
+    return document.getElementById(id).innerHTML = window.localStorage['version'].toString() || $.getJSON("/api/version", function (json) {
+        window.localStorage['version'] = json.version;
         return (document.getElementById(id).innerHTML = json.version);
     });
 }
