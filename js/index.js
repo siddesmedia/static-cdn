@@ -30,7 +30,7 @@ async function getusername(id, userid) {
 }
 
 async function version(id) {
-    return document.getElementById(id).innerHTML = window.localStorage['version'].toString() || $.getJSON("/api/version", function (json) {
+    return document.getElementById(id).innerHTML = window.localStorage['version'] || $.getJSON("/api/version", function (json) {
         window.localStorage['version'] = json.version;
         return (document.getElementById(id).innerHTML = json.version);
     });
@@ -49,10 +49,11 @@ async function haveiliked(elemid, likecount, postid, loggedin) {
 
 async function like(postid, elemid, likecount) {
     if (loggedinbool == "true") {
+        return document.getElementById(elemid).innerHTML = "<button onclick='unlike(\"" + postid + '", "' + elemid + '", "' + eval(likecount + 1) + '")\' "type="button" class="postlike red button" id="i_' + elemid + '">Unlike - ' + eval(eval(likecount) + 1) + "</button>";
         $.post("/like/new", {
             postid: postid
         }, function (data, status, jqXHR) {
-            return (document.getElementById(elemid).innerHTML = "<button onclick='unlike(\"" + postid + '", "' + elemid + '", "' + eval(likecount + 1) + '")\' "type="button" class="postlike red button" id="i_' + elemid + '">Unlike - ' + eval(eval(likecount) + 1) + "</button>");
+            return document.getElementById(elemid).innerHTML = "<button onclick='unlike(\"" + postid + '", "' + elemid + '", "' + eval(likecount + 1) + '")\' "type="button" class="postlike red button" id="i_' + elemid + '">Unlike - ' + eval(eval(likecount) + 1) + "</button>";
         });
     } else {
         window.location = "/login";
@@ -61,10 +62,11 @@ async function like(postid, elemid, likecount) {
 
 async function unlike(postid, elemid, likecount) {
     if (loggedinbool == "true") {
+        return document.getElementById(elemid).innerHTML = "<button onclick='like(\"" + postid + '", "' + elemid + '", "' + eval(likecount - 1) + '")\' "type="button" class="postlike button" id="i_' + elemid + '">Like - ' + eval(eval(likecount) - 1) + "</button>";
         $.post("/like/remove", {
             postid: postid
         }, function (data, status, jqXHR) {
-            return (document.getElementById(elemid).innerHTML = "<button onclick='like(\"" + postid + '", "' + elemid + '", "' + eval(likecount - 1) + '")\' "type="button" class="postlike button" id="i_' + elemid + '">Like - ' + eval(eval(likecount) - 1) + "</button>");
+            return document.getElementById(elemid).innerHTML = "<button onclick='like(\"" + postid + '", "' + elemid + '", "' + eval(likecount - 1) + '")\' "type="button" class="postlike button" id="i_' + elemid + '">Like - ' + eval(eval(likecount) - 1) + "</button>";
         });
     } else {
         window.location = "/login";
